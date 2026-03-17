@@ -1,0 +1,27 @@
+# Node
+node_modules/
+.pnpm-store/
+.npm/
+.DS_Store
+.env
+.env.*
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# OS
+Thumbs.db
+# Build/output
+build/
+dist/
+.next/
+out/
+# Local data/backups
+data/
+*.bak
+*.back
+*.tmp
+*_temp.json
+*_tmp.json
+*_results.json

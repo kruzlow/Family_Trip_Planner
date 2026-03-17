@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist — Family Trip Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/admin.css">
+  <style>
+    .badge-status { cursor: pointer; user-select: none; }
+    .badge-status:hover { opacity: 0.8; }
+    .generating-indicator { font-size: 12px; color: var(--color-text-muted); font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <img src="elephant.svg" alt="">
+      <span class="sidebar-brand-name">Trip Planner</span>
+    </a>
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label">Navigation</span>
+      <a class="sidebar-link" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Trips
+      </a>
+      <a class="sidebar-link" href="itinerary.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Itinerary
+      </a>
+      <a class="sidebar-link" href="budget.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Budget
+      </a>
+      <a class="sidebar-link" href="destinations.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        Destinations
+      </a>
+      <a class="sidebar-link active" href="checklist.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Checklist
+      </a>
+      <a class="sidebar-link" href="discussions.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Discussion Log
+      </a>
+    </nav>
+    <div class="sidebar-footer">Family Trip Planner v2</div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="page-header">
+      <h1 class="page-header-title">Checklist</h1>
+      <div class="page-header-actions">
+        <select class="form-select" id="tripSelect" style="width:220px" onchange="onTripChange(this.value)">
+          <option value="">Select a trip…</option>
+        </select>
+        <button class="btn btn-secondary" id="genChecklistBtn" onclick="generateChecklist()" style="display:none">&#10022; Generate Checklist</button>
+        <span class="generating-indicator" id="genStatus" style="display:none"></span>
+        <button class="btn btn-primary" onclick="openAddModal()">+ Add Task</button>
+      </div>
+    </header>
+    <div class="admin-content">
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-card-label">TOTAL TASKS</div><div class="stat-card-value" id="statTotal">—</div></div>
+        <div class="stat-card"><div class="stat-card-label">IN PROGRESS</div><div class="stat-card-value" id="statDoing">—</div></div>
+        <div class="stat-card"><div class="stat-card-label">COMPLETED</div><div class="stat-card-value" id="statDone">—</div></div>
+      </div>
+
+      <div class="filter-bar">
+        <input class="form-input" id="searchInput" placeholder="Search tasks…" oninput="applyFilters()">
+        <select class="form-select" id="statusFilter" onchange="applyFilters()" style="width:140px">
+          <option value="">All Statuses</option>
+          <option value="todo">To Do</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+        <select class="form-select" id="priorityFilter" onchange="applyFilters()" style="width:150px">
+          <option value="">All Priorities</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+
+      <div class="table-panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Assignee</th>
+              <th>Due Date</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th style="width:100px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tasksBody">
+            <tr><td colspan="6" class="empty-state"><p>Select a trip to view its checklist.</p></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Task Modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title" id="taskModalTitle">Add Task</span>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label class="form-label">Title <span class="form-required">*</span></label>
+        <input class="form-input" id="fTitle" placeholder="e.g. Book flights">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Assignee</label>
+          <input class="form-input" id="fAssignee" placeholder="Person responsible">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Due Date</label>
+          <input class="form-input" type="date" id="fDue">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <select class="form-select" id="fPriority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="fStatus">
+            <option value="todo" selected>To Do</option>
+            <option value="doing">Doing</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="fNotes" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="deleteBtn" onclick="deleteTask()" style="margin-right:auto;display:none">Delete</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="js/checklist.js"></script>
+</body>
+</html>

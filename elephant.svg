@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Mouse icon">
+  <defs>
+    <linearGradient id="mgrad" x1="0" x2="1">
+      <stop offset="0%" stop-color="#f3f4f6" />
+      <stop offset="100%" stop-color="#d1d5db" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="10" fill="transparent" />
+  <g transform="translate(6,8)">
+    <!-- body -->
+    <ellipse cx="26" cy="26" rx="20" ry="14" fill="url(#mgrad)" stroke="#374151" stroke-width="1.5" />
+    <!-- head -->
+    <ellipse cx="40" cy="20" rx="10" ry="8" fill="#f8fafc" stroke="#374151" stroke-width="1.5" />
+    <!-- ear left -->
+    <circle cx="34" cy="12" r="3.8" fill="#f8fafc" stroke="#374151" stroke-width="1.2" />
+    <!-- ear right -->
+    <circle cx="46" cy="12" r="2.8" fill="#f8fafc" stroke="#374151" stroke-width="1.2" />
+    <!-- eye -->
+    <circle cx="38" cy="20" r="1.5" fill="#111827" />
+    <!-- nose -->
+    <circle cx="48" cy="24" r="1.4" fill="#111827" />
+    <!-- whiskers -->
+    <path d="M36 24 L28 22" stroke="#374151" stroke-width="0.9" stroke-linecap="round" />
+    <path d="M36 26 L28 26" stroke="#374151" stroke-width="0.9" stroke-linecap="round" />
+    <path d="M36 28 L28 30" stroke="#374151" stroke-width="0.9" stroke-linecap="round" />
+    <!-- tail -->
+    <path d="M8 30 C2 22, 0 18, 4 14" stroke="#374151" stroke-width="1.4" stroke-linecap="round" fill="none" />
+    <!-- feet -->
+    <rect x="16" y="34" width="6" height="6" rx="2" fill="#e5e7eb" />
+    <rect x="30" y="34" width="6" height="6" rx="2" fill="#e5e7eb" />
+  </g>
+</svg>
